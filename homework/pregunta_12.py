@@ -6,10 +6,12 @@ librerias de pandas para resolver las preguntas.
 """
 
 
+import pandas as pd
+
 def pregunta_12():
     """
     Construya una tabla que contenga `c0` y una lista separada por ','
-    de los valores de la columna `c5a`  y `c5b` (unidos por ':') de la
+    de los valores de la columna `c5a` y `c5b` (unidos por ':') de la
     tabla `tbl2.tsv`.
 
     Rta/
@@ -22,3 +24,20 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
+    # Leer el archivo TSV
+    df = pd.read_csv("files/input/tbl2.tsv", sep="\t")
+
+    # Crear una nueva columna que combine c5a y c5b con ':'
+    df["par"] = df["c5a"] + ":" + df["c5b"].astype(str)
+
+    # Agrupar por c0 y unir los pares con ','
+    resultado = (
+        df.groupby("c0")["par"]
+        .apply(lambda x: ",".join(sorted(x)))
+        .reset_index()
+        .rename(columns={"par": "c5"})
+    )
+
+    return resultado
+
+print(pregunta_12())

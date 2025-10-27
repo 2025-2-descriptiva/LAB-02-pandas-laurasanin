@@ -6,6 +6,8 @@ librerias de pandas para resolver las preguntas.
 """
 
 
+import pandas as pd
+
 def pregunta_11():
     """
     Construya una tabla que contenga `c0` y una lista separada por ',' de
@@ -22,3 +24,16 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
+    # Leer el archivo TSV
+    df = pd.read_csv("files/input/tbl1.tsv", sep="\t")
+
+    # Agrupar por 'c0' y concatenar los valores de 'c4' separados por ','
+    resultado = (
+        df.groupby("c0")["c4"]
+        .apply(lambda x: ",".join(sorted(x)))  # Ordena y une los valores
+        .reset_index() # Reinicia el índice para obtener un DataFrame limpio
+    )
+
+    return resultado
+
+print(pregunta_11())

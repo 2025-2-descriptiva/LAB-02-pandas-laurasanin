@@ -5,13 +5,21 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 librerias de pandas para resolver las preguntas.
 """
 
+import pandas as pd
 
 def pregunta_06():
+
     """
-    Retorne una lista con los valores unicos de la columna `c4` del archivo
-    `tbl1.csv` en mayusculas y ordenados alfabéticamente.
+    Retorne una lista con los valores únicos de la columna `c4` del archivo
+    `tbl1.tsv` en mayúsculas y ordenados alfabéticamente.
 
     Rta/
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-
+    
     """
+    df = pd.read_csv("files/input/tbl1.tsv", sep="\t")  # Leer el archivo TSV
+    valores = df["c4"].unique()                         # Obtener valores únicos
+    valores_mayus = [v.upper() for v in valores]        # Convertir a mayúsculas usando List comprehension 
+    return sorted(valores_mayus)                        # Ordenar alfabéticamente
+
+print(pregunta_06())
